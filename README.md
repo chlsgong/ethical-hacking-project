@@ -2,7 +2,9 @@
 
 Network sniffer for credentials
 
-1.     Sniff packets on known network (Ethical Hacking wifi) using Wireshark
-2.     Grab the unencrypted data passed over the network, and the most popular websites used from the sniffed packets and save as file
-3.     If necessary create our own website/traffic to ensure that we have unencrypted data
-4.     Use Hydra to try unencrypted data as usernames on most used websites
+1.     Install virus on victim's computer
+2.     Sniff packets containing login information using tshark
+3.     Grab the unencrypted data passed over the network and save into a "prize" file
+4.     Send the "prize" file back to the attacker
+5.     Use Selenium to emulate user log-in on popular websites, such as Facebook, Gmail, and Reddit
+6.     Output successful credentials to attacker
