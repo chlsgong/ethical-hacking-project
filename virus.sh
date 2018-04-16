@@ -7,4 +7,4 @@
 python project.py .cred
 
 # send prize over ssh
-scp .prize hcgong@$1:~/Documents
+scp -i id_rsa .prize hcgong@$1:~/Documents
