@@ -4,4 +4,4 @@
 scp -i id_rsa hcgong@scarab-beetle.cs.utexas.edu:~/Documents/.prize ~/Desktop/hacker
 
 # run selenium script
-
+python selenium/sel2.py

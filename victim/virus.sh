@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # run tshark script
-./tshark.sh $1
+./tshark.sh 60
 
 # run python script
 python project.py .cred
